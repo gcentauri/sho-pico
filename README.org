@@ -1,0 +1,15 @@
+* Pico Pico! Sho-Pico!
+
+Welcome to my experiments with PicoLisp. Maybe some of this will be useful
+someday, but for now its just a space. This document is produced with Emacs
+org-mode and the source is literate code. For example, in Emacs with this 
+.org source, the following example block can be executed:
+
+#+begin_src picolisp :results value
+  "hello world"
+#+end_src
+
+PicoLisp on my system will evaluate it and put the results into this file:
+
+: hello world
+
