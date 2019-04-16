@@ -1,9 +1,19 @@
 * Pico Pico! Sho-Pico!
 
 Welcome to my experiments with PicoLisp. Maybe some of this will be useful
-someday, but for now its just a space. This document is produced with Emacs
-org-mode and the source is literate code. For example, in Emacs with this 
-.org source, the following example block can be executed:
+someday, but for now its just a space.
+
+**** 99 Lisp Problems
+
+This is my first exercise with the language, and I decided to build a little
+test runner utilizing the "code as data" aspect of PicoLisp. You can run these
+with =$ pil 99-problems.l -main=. Any failures will print an =F= and undefined
+functions tested will print =_= in the terminal.
+
+** Literate Code with Emacs Org-Babel and PicoLisp
+
+This document is produced with Emacs org-mode and the source is literate code. For
+example, in Emacs with this .org source, the following example block can be executed:
 
 #+begin_src picolisp :results value
   "hello world"
