@@ -13,3 +13,20 @@ PicoLisp on my system will evaluate it and put the results into this file:
 
 : hello world
 
+That's not all that impressive, but considering PicoLisp has a built in database
+and web capabilities, it offers some intriguing possibilities for using org-mode
+to do some literate programming.
+
+One perfect match up is the list structures and org tables:
+
+#+begin_src picolisp :results value
+  '((a b c)
+    (1 2 3)
+    (x y z)
+    (7 8 9))
+#+end_src
+
+| a | b | c |
+| 1 | 2 | 3 |
+| x | y | z |
+| 7 | 8 | 9 |
