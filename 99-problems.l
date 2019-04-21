@@ -58,3 +58,18 @@
 
 ;; 06 Detect a palindrome list
 (expect '(palindrome? '(x a n a x)))
+
+(de palindrome? (Lst)
+    (= Lst (my-reverse Lst)))
+
+;; 07 Flatten a nested list structure.
+
+(expect '(= '(a b c d e) (my-flatten '(a (b (c d) e)))))
+
+(de my-flatten (Alol)
+    (cond
+      ((= '() Alol) '())
+      ((atom (car Alol)) (cons (car Alol)
+                               (my-flatten (cdr Alol))))
+      ((lst? (car Alol)) (append (my-flatten (car Alol))
+                                 (my-flatten (cdr Alol))))))
