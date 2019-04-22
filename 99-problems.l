@@ -8,9 +8,9 @@
 (de testrun (Tst)
     (let (Result (catch '("Undefined") (eval Tst)))
       (cond
-        ((= Result "Undefined") "_")
-        (Result ".")
-        "F")))
+        ((= Result "Undefined") "")
+        (Result "")
+        "")))
 
 (de main ()
     (prinl (mapcar testrun Tests))
