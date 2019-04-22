@@ -63,7 +63,6 @@
     (= Lst (my-reverse Lst)))
 
 ;; 07 Flatten a nested list structure.
-
 (expect '(= '(a b c d e) (my-flatten '(a (b (c d) e)))))
 
 (de my-flatten (Alol)
@@ -73,3 +72,30 @@
                                (my-flatten (cdr Alol))))
       ((lst? (car Alol)) (append (my-flatten (car Alol))
                                  (my-flatten (cdr Alol))))))
+
+;; 08 Eliminate consecutive duplicates of list elements.
+(expect '(= '(a b c d e) (compress '(a a a b b c c c d a a e e e e))))
+
+(de compress (Lst)
+    (recur (Lst Acc)
+           (cond ((not Lst) Acc)
+                 ((member (car Lst) Acc) (recurse (cdr Lst) Acc))
+                 (T (recurse (cdr Lst) (append Acc (list (car Lst))))))))
+
+;; 09 Pack consecutive duplicates of list elements into sublists.
+(expect '(=
+          (dupack '(a a a a b c c a a d e e e e))
+          '((a a a a) (b) (c c) (a a) (d) (e e e e))))
+
+(de dupack (Lst)
+    (recur (Lst Acc Out)
+           (let (Rst (cdr Lst) AddAcc (cons (car Lst) Acc))
+             (cond
+               ((not Lst) (reverse (cons Acc Out)))
+               ((not Acc) (recurse Rst AddAcc Out))
+               ((member (car Lst) Acc) (recurse Rst AddAcc Out))
+               (T (recurse Rst (list (car Lst)) (cons Acc Out)))))))
+
+;; 10 Run-length encoding of a list.
+(expect '(= (encode '(a a a a b c c a a d e e e e))
+           '((4 A) (1 B) (2 C) (2 A) (1 D)(4 E))))
