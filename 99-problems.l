@@ -95,4 +95,7 @@
 
 ## 10 Run-length encoding of a list.
 (expect '(= (encode '(a a a a b c c a a d e e e e))
-            '((4 A) (1 B) (2 C) (2 A) (1 D)(4 E)) ) )
+            '((4 a) (1 b) (2 c) (2 a) (1 d)(4 e)) ) )
+
+(de encode (Lst)
+   (mapcar '((L) (list (my-length L) (car L))) (dupack Lst)) )
