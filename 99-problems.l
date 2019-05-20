@@ -76,10 +76,9 @@
 ## 08 Eliminate consecutive duplicates of list elements.
 (expect '(= '(a b c d a e) (compress '(a a a b b c c c d a a e e e e))))
 (de compress (Lst)
-   (recur (Lst Acc)
-      (cond ((not Lst) Acc)
-         ((member (car Lst) Acc) (recurse (cdr Lst) Acc))
-         (T (recurse (cdr Lst) (append Acc (list (car Lst))))) ) ) )
+   (cond ((or (not Lst) (not (cdr Lst))) Lst)
+      ((= (car Lst) (cadr Lst)) (compress (cdr Lst)))
+      (T (cons (car Lst) (compress (cdr Lst)))) ) )
 
 ## 09 Pack consecutive duplicates of list elements into sublists.
 (expect '(= (dupack '(a a a a b c c a a d e e e e))
