@@ -71,10 +71,10 @@
       ((atom (car Alol)) (cons (car Alol)
                             (my-flatten (cdr Alol)) ) )
       ((lst? (car Alol)) (append (my-flatten (car Alol))
-(expect '(= '(a b c d e) (compress '(a a a b b c c c d a a e e e e))))
                             (my-flatten (cdr Alol)) ) ) ) )
 
 ## 08 Eliminate consecutive duplicates of list elements.
+(expect '(= '(a b c d a e) (compress '(a a a b b c c c d a a e e e e))))
 (de compress (Lst)
    (recur (Lst Acc)
       (cond ((not Lst) Acc)
