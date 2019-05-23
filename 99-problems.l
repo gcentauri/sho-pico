@@ -54,9 +54,10 @@
 (de palindrome? (Lst)
    (= Lst (my-reverse Lst)) )
 
-(problem "07 Flatten a nested list structure. (fish 'fun 'any) -> lst"
+(problem "07 Flatten a nested list structure."
    (= '(a b c d e) (my-flatten '(a (b (c d) e)))) )
 
+## (fish 'fun 'any) -> lst
 (de my-flatten (Alol)
    (cond
       ((= '() Alol) '())
@@ -66,7 +67,7 @@
                             (my-flatten (cdr Alol)) ) ) ) )
 
 (problem "08 Eliminate consecutive duplicates of list elements."
-   '(= '(a b c d a e) (compress '(a a a b b c c c d a a e e e e))) )
+   (= '(a b c d a e) (compress '(a a a b b c c c d a a e e e e))) )
 
 (de compress (Lst)
    (cond ((or (not Lst) (not (cdr Lst))) Lst)
@@ -74,7 +75,7 @@
       (T (cons (car Lst) (compress (cdr Lst)))) ) )
 
 (problem "09 Pack consecutive duplicates of list elements into sublists."
-   '(= (dupack '(a a a a b c c a a d e e e e))
+   (= (dupack '(a a a a b c c a a d e e e e))
        '((a a a a) (b) (c c) (a a) (d) (e e e e)) ) )
 
 (de dupack (Lst)
@@ -87,8 +88,18 @@
             (T (recurse Rst (list (car Lst)) (cons Acc Out))) ) ) ) )
 
 (problem "10 Run-length encoding of a list."
-   '(= (encode '(a a a a b c c a a d e e e e))
-       '((4 a) (1 b) (2 c) (2 a) (1 d)(4 e)) ) )
+   (= (encode '(a a a a b c c a a d e e e e))
+      '((4 a) (1 b) (2 c) (2 a) (1 d)(4 e)) ) )
 
 (de encode (Lst)
    (mapcar '((L) (list (my-length L) (car L))) (dupack Lst)) )
+
+(problem "11 Modified run-length encoding."
+   (= (encode-modified '(a a a a b c c a a d e e e e))
+      '((4 a) b (2 c) (2 a) d (4 e))) )
+
+(de encode-modified (Lst)
+   (mapcar '((L) (if (= 1 (my-length L))
+                    (car L)
+                    (list (my-length L) (car L)) ) )
+      (dupack Lst) ) )
