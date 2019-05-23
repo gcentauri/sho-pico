@@ -103,3 +103,43 @@
                     (car L)
                     (list (my-length L) (car L)) ) )
       (dupack Lst) ) )
+
+(problem "12 Decode a run-length encoded list."
+   (= (decode '((4 a) b (2 c) (2 a) d (4 e)))
+      '(a a a a b c c a a d e e e e) ) )
+
+(problem "13 Run-length encoding of a list (direct solution)."
+   (= (encode-direct '(a a a a b c c a a d e e e e))
+      '((4 a) b (2 c) (2 a) d (4 e)) ) )
+
+(problem "14 Duplicate the elements of a list."
+   (= (dupli '(a b c c d))
+      (a a b b c c c c d d) ) )
+
+(problem "15 Replicate the elements of a list a given number of times."
+   (= (repli '(a b c) 3)
+      (a a a b b b c c c) ) )
+
+(problem "16 Drop every N'th element from a list"
+   (= (drop '(a b c d e f g h i k) 3)
+      (a b d e g h k) ) )
+
+(problem "17 Split a list into two parts; the length of the first part is given"
+   (= (split '(a b c d e f g h i k) 3)
+      ( (a b c) (d e f g h i k)) ) )
+
+(problem "18 Extract a slice from a list."
+   (= (slice '(a b c d e f g h i k) 3 7)
+      (c d e f g) ) )
+
+(problem "19-a Rotate a list N places to the left."
+   (= (rotate '(a b c d e f g h) 3)
+      (d e f g h a b c) ) )
+
+(problem "19-b Rotate a list -N places to the left."
+   (= (rotate '(a b c d e f g h) -2)
+      (g h a b c d e f) ) )
+
+(problem "20 Remove the K'th element from a list."
+   (= (remove-at '(a b c d) 2)
+      (a c d) ) )
