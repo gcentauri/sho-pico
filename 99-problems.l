@@ -1,9 +1,9 @@
 ## Testing "framework"
 ## =================
-(setq Problems '())
+(setq *Problems '())
 
 (de problem P
-   (queue 'Problems P))
+   (queue '*Problems P))
 
 (de check (P)
    (let (Result (catch '("Undefined") (eval P)))
@@ -13,7 +13,7 @@
         "" ) ) )
 
 (de main ()
-   (for P Problems (prinl (glue " " (list (check (cadr P)) (car P)))))
+   (for P *Problems (prinl (glue " " (list (check (cadr P)) (car P)))))
    (bye) )
 ## ===================================
 
