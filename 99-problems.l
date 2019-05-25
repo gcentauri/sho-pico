@@ -108,6 +108,12 @@
    (= (decode '((4 a) b (2 c) (2 a) d (4 e)))
       '(a a a a b c c a a d e e e e) ) )
 
+(de decode (Lst)
+   (cond
+      ((not Lst) '())
+      ((atom (car Lst)) (cons (car Lst) (decode (cdr Lst))))
+      ((lst? (car Lst)) (append (need (car (car Lst)) (cadr (car Lst))) (decode (cdr Lst)))) ) )
+
 (problem "13 Run-length encoding of a list (direct solution)."
    (= (encode-direct '(a a a a b c c a a d e e e e))
       '((4 a) b (2 c) (2 a) d (4 e)) ) )
