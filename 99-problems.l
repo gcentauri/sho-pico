@@ -12,9 +12,8 @@
         (Result "")
         "" ) ) )
 
-(de main ()
-   (for P *Problems (prinl (glue " " (list (check (cadr P)) (car P)))))
-   (bye) )
+(de go ()
+   (for P *Problems (prinl (glue " " (list (check (cadr P)) (car P))))) )
 ## ===================================
 
 ## 99 Problems, but a lisp ain't one
@@ -140,6 +139,10 @@
 (problem "15 Replicate the elements of a list a given number of times."
    (= (repli '(a b c) 3)
       '(a a a b b b c c c) ) )
+
+(de repli (Lst N)
+   (make
+      (while Lst (let (E (pop 'Lst)) (do N (link E)))) ) )
 
 (problem "16 Drop every N'th element from a list"
    (= (drop '(a b c d e f g h i k) 3)
