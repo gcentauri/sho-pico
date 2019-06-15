@@ -145,8 +145,16 @@
       (while Lst (let (E (pop 'Lst)) (do N (link E)))) ) )
 
 (problem "16 Drop every N'th element from a list"
-   (= (drop '(a b c d e f g h i k) 3)
-      '(a b d e g h k) ) )
+   (= (drop '(a b c d e f g h i j k) 3)
+      '(a b d e g h j k) ) )
+
+(de drop (Lst N)
+   (let (Cnt N)
+      (make
+         (while Lst
+            (let (E (pop 'Lst))
+               (dec 'Cnt)
+               (if (> Cnt 0) (link E) (setq Cnt N)) ) ) ) ) )
 
 (problem "17 Split a list into two parts; the length of the first part is given"
    (= (my-split '(a b c d e f g h i k) 3)
