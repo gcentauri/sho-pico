@@ -158,7 +158,15 @@
 
 (problem "17 Split a list into two parts; the length of the first part is given"
    (= (my-split '(a b c d e f g h i k) 3)
-      '( (a b c) (d e f g h i k)) ) )
+      '((a b c) (d e f g h i k)) ) )
+
+(de my-split (Lst N)
+   (let (Fnt '())
+      (while (> N 0) (queue 'Fnt (pop 'Lst)) (dec 'N))
+      (list Fnt Lst) ) )
+
+(de my-split2 (Lst N)
+   (list (cut N 'Lst) Lst))
 
 (problem "18 Extract a slice from a list."
    (= (slice '(a b c d e f g h i k) 3 7)
