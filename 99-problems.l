@@ -172,6 +172,9 @@
    (= (slice '(a b c d e f g h i k) 3 7)
       '(c d e f g) ) )
 
+(de slice (Lst I K)
+   (head (inc (- K I)) (nth Lst I)) )
+
 (problem "19-a Rotate a list N places to the left."
    (= (rotate '(a b c d e f g h) 3)
       '(d e f g h a b c) ) )
@@ -180,6 +183,17 @@
    (= (rotate '(a b c d e f g h) -2)
       '(g h a b c d e f) ) )
 
+(de rotate (Lst N)
+   (let (N (- (length Lst) N))
+      (do N (rot Lst)) ) )
+
 (problem "20 Remove the K'th element from a list."
    (= (remove-at '(a b c d) 2)
       '(a c d) ) )
+
+(de remove-at (Lst K)
+   (remove K Lst) )
+
+(problem "21")
+
+(go)
