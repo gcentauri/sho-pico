@@ -1,11 +1,12 @@
 * PicoLisp is Simple
-** Guess my number
 
 PicoLisp is built to be simple from the bottom-up. The author first
 designed a virtual machine architecture. This allows for simplicity
 to be baked into the language. To emphasize simplicity, PicoLisp
 only has one single data structure, the *cell*. All higher level 
 data types, numbers, symbols, and lists, are built from cells.
+
+** Guess my number
 
 We'll start with a simple game - represented with a cell - and
 use some numbers and symbols. Perhaps we can use lists when writing
@@ -15,7 +16,7 @@ program will either guess your number, or know you cheated!
 
 How can we represent this game with a cell? Well, the boundaries for
 this game are two numbers your number is between. We can create a
-cell to represent those boundaries and us a *symbol* to point to
+cell to represent those boundaries and use a *symbol* to point to
 it with a name like this:
 
 #+begin_src picolisp
@@ -53,16 +54,47 @@ by using the =cons= function:
 -> (1 . 100)
 #+end_src
 
-So now, if you type =*Bounds= at the repl, it should return its
+So now, if you type =*Bounds= in the repl, it will return its
 value, =(1 . 100)=. There. That is all the data we need to represent
-our guessing game.
+our guessing game. But we need to be able to access the lower bound
+and the upper bound individually. In order to do that we will use
+the =car= and =cdr= functions:
 
 #+begin_src picolisp
+: (car *Bounds)
+-> 1
+: (cdr *Bounds)
+-> 100
+#+end_src
+
+The names of those functions are tied to the virtual machine, and mean
+"contents of the address register" and "contents of the decrement register".
+What matters to us though, is how they access parts of a cell. Since everything
+in PicoLisp is made of cells, you can expect to see =car= and =cdr= (and their
+relatives) quite often.
+
+Since we will be using both those values throughout the guessing game program,
+lets write some functions that make it easier to use them and know what they
+mean. I'll write a function called =small= here, and I'll leave it to you to
+implement =big=:
+
+#+begin_src picolisp
+(de small ()
+   (car *Bounds) )
+#+end_src
+
+PicoLisp defines new functions with =de=. You give it a name, its arguments
+if any, and then the body of the function. What we get back is the name
+as a new symbol whose =VAL= is the rest of the arguments.
+
+#+begin_src picolisp :tangle guess-my-number.l
   (set '*Bounds '(1 . 100))
 
-  (de small () (car *Bounds))
+  (de small () 
+     (car *Bounds) )
 
-  (de big () (cdr *Bounds))
+  (de big () 
+     (cdr *Bounds) )
 
   (de guess-my-number ()
      (if (> (small) (big)) 
@@ -79,15 +111,13 @@ our guessing game.
 
   (de cheater ()
      (prinl '(You " " cheated!))
-     (new-game) )
-
-  (de new-game (S B)
-     (set '*Bounds (cons (or S 1) (or B 100)))
-     (go) )
+     (bye) )
 
   (de go ()
      (prinl (text "Think of a number between @1 and @2!" (small) (big)))
      (wait 2000)
      (prinl "Here we go! My first guess is... ") 
      (guess-my-number) )
+
+  (go)
 #+end_src
