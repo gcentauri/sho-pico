@@ -1,0 +1,136 @@
+* PicoLisp is Simple
+** Guess my number
+
+PicoLisp is built to be simple from the bottom-up. The author first
+designed a virtual machine architecture. This allows for simplicity
+to be baked into the language. To emphasize simplicity, PicoLisp
+only has one single data structure, the *cell*. All higher level 
+data types, numbers, symbols, and lists, are built from cells.
+
+We'll start with a simple game - represented with a cell - and
+use some numbers and symbols. Perhaps we can use lists when writing
+messages to the player. The game is... actually its a number guessing
+AI. You'll think of a number, and by answering simple questions, the
+program will either guess your number, or know you cheated!
+
+How can we represent this game with a cell? Well, the boundaries for
+this game are two numbers your number is between. We can create a
+cell to represent those boundaries and us a *symbol* to point to
+it with a name like this:
+
+#+begin_src picolisp
+(set '*Bounds '(1 . 100))
+#+end_src
+
+Actually, I just realized we're already using *lists*, this is Lisp
+after all! List processing is what it is all about. Everything in 
+the parenthesis above is a list. The PicoLisp interpreter knows how
+to read lists like that as a program. We can read it too. That list
+starts with =set= which is a PicoLisp function that lets you set
+the *value* or =val=  of a *symbol*. So, following =set= is the 
+symbol whose value you want to set. Now, there's something special
+here... the ='= mark. This is a shorthand for the =quote= function
+which marks something as a piece of data, rather than something the
+PicoLisp reader should evaluate. Without that quote, =*Bounds= would
+evaluate to =NIL= and =NIL= is a protected symbol:
+
+#+begin_src picolisp
+: (set *Foo 1)
+!? (set *Foo 1)
+NIL -- Protected symbol
+#+end_src
+
+Bad things would happen if we could set the value of =NIL=. So,
+we're setting the value of the symbol *Bounds to another quoted
+list. This is our cell. The dot in between 1 and 100 is one way
+to link these two numbers into a cell. We put 1 in the =car= of
+the cell and 100 in the =cdr= (pronounced "could'r") by using
+that dot to indicate the cell. We could also construct a cell
+by using the =cons= function:
+
+#+begin_src picolisp
+: (cons 1 100)
+-> (1 . 100)
+#+end_src
+
+So now, if you type =*Bounds= at the repl, it should return its
+value, =(1 . 100)=. There. That is all the data we need to represent
+our guessing game.
+
+#+begin_src picolisp
+  (set '*Bounds '(1 . 100))
+
+  (de small () (car *Bounds))
+
+  (de big () (cdr *Bounds))
+
+  (de guess-my-number ()
+     (if (> (small) (big)) 
+        (cheater) 
+        (>> 1 (+ (small) (big))) ) )
+
+  (de smaller ()
+     (set '*Bounds (cons (small) (dec (guess-my-number))))
+     (guess-my-number) )
+
+  (de bigger ()
+     (set '*Bounds (cons (inc (guess-my-number)) (big)))
+     (guess-my-number) )
+
+  (de cheater ()
+     (prinl '(You " " cheated!))
+     (new-game) )
+
+  (de new-game (S B)
+     (set '*Bounds (cons (or S 1) (or B 100)))
+     (go) )
+
+  (de go ()
+     (prinl (text "Think of a number between @1 and @2!" (small) (big)))
+     (wait 2000)
+     (prinl "Here we go! My first guess is... ") 
+     (guess-my-number) )
+#+end_src
+
+* ob-picolisp
+
+#+begin_src picolisp :results ouput :session foo
+(+ 2 2)
+(de boo () (print "boom shsks"))
+#+end_src
+
+#+RESULTS:
+: 4
+
+#+begin_src picolisp :results output :session foo
+(boo)
+(boo)
+#+end_src
+
+#+RESULTS:
+: "boom shsks"
+: "boom shsks"
+
+* Learning PicoLisp
+** Attempt to use =(help 'sym)= with babel for notes
+
+
+Just realized that even without docs hooked up to the emacs system, having the
+=pil= repl and org babel might help me build another presentation of docs as go
+through. lets see..
+
+#+begin_src picolisp :results output
+(help 'help T)
+#+end_src
+
+#+RESULTS:
+
+This needs to have the babel interpreter using debug mode to work properly,
+and the way it outputs the result has all the non printing characters sent through
+the repl. Probably needs some help developing picolisp mode further.
+
+** HTTP Server
+
+
+* Ideas
+** Mad-lib game using cells for data structures?

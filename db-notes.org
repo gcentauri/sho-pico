@@ -1,0 +1,112 @@
+#+BEGIN_EXAMPLE
+: (pool "usergroups.db")
+-> T
+: # MODELS
+(class +User +Entity)
+-> +User
+: (rel nr (+Key +Number))
+-> +User
+: (rel nm (+Idx +String))
+-> +User
+: (rel mshp (+List +Joint) user (+Mshp))
+-> +User
+: (class +Group +Entity)
+-> +Group
+: (rel nm (+Idx +String))
+-> +Group
+: (rel mshp (+List +Joint) group (+Mshp))
+-> +Group
+: (class +Mshp +Entity)
+-> +Mshp
+: (rel role (+Ref +String))
+-> +Mshp
+: (rel user (+Joint) mshp (+User))
+-> +Mshp
+: (rel group (+Joint) mshp (+Group))
+-> +Mshp
+: # INIT
+(obj ((+User) nr 1 nm "Grant"))
+-> {2}
+: (obj ((+Group) nm "Go Club"))
+-> {6}
+: (obj ((+Mshp) role "Organizer")
+      user `(db 'nr '+User 1)
+      group `(db 'nm '+Group "Go Club") )
+-> {11}
+: (commit)
+-> T
+: (select +Mshp)
+(select +Mshp)
+{11} (+Mshp)
+   role "Organizer"
+   group {6}
+   user {2}
+
+
+-> NIL
+: (new! '(+Group) 'nm "Girls Who Code")
+(new! '(+Group) 'nm "Girls Who Code")
+-> {14}
+: (select +Group)
+(select +Group)
+{14} (+Group)
+   nm "Girls Who Code"
+
+
+{6} (+Group)
+   nm "Go Club"
+   mshp ({11})
+
+
+-> NIL
+: (new! '(+Mshp) 'role "Presenter" 'user (db 'nr '+User 1) 'group (db 'nm '+Group "Girls Who Code"))
+(new! '(+Mshp) 'role "Presenter" 'user (db 'nr '+User 1) 'group (db 'nm '+Group "Girls Who Code"))
+-> {15}
+: (select +Group)
+(select +Group)
+{14} (+Group)
+   nm "Girls Who Code"
+   mshp ({15})
+
+
+{6} (+Group)
+   nm "Go Club"
+   mshp ({11})
+
+
+-> NIL
+: (select +Mshp)
+(select +Mshp)
+{11} (+Mshp)
+   role "Organizer"
+   group {6}
+   user {2}
+
+
+{15} (+Mshp)
+   role "Presenter"
+   group {14}
+   user {2}
+
+
+-> NIL
+: 
+#+END_EXAMPLE
+
+#+begin_src emacs-lisp :exports none
+(set (make-local-variable 'i) 0)
+(fset (make-local-variable 'fig-file)
+      #'(lambda () (concat "f" (number-to-string (incf i)) ".pdf")))
+#+end_src
+
+#+RESULTS:
+| lambda | nil | (concat f (number-to-string (incf i)) .pdf) |
+
+(fig-file)
+
+#+begin_src emacs-lisp :foo (fig-file)
+foo
+#+end_src
+
+#+RESULTS:
+: NIL

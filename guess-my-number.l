@@ -28,5 +28,3 @@
    (wait 2000)
    (prinl "Here we go! My first guess is... ")
    (guess-my-number) )
-
-(go)
