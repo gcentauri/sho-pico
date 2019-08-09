@@ -1,3 +1,11 @@
+# 2019-08-08
+# shoshin
+
+(load "@lib/http.l" "@lib/xhtml.l" "@lib/form.l" "@lib/ps.l")
+
+# Game
+##----
+
 (default *Bounds '(1 . 100))
 
 (de small ()
@@ -16,19 +24,23 @@
    (guess-my-number) )
 
 (de bigger ()
-   (set '*Bounds (cons (inc (guess-my-number)) (big)))
-   (guess-my-number) )
+    (set '*Bounds (cons (inc (guess-my-number)) (big)))
+    (guess-my-number) )
 
+# Gui
 #-----
-(app)
-(default *Guess (guess-my-number))
 
-(action
-   (html 0 "Guess My Number" "@lib.css" NIL
-      (form NIL
-         (<div> 'main
-            (gui '(+Style +Var +TextField) "guess" '*Guess)
-            (<div> 'buttons
-               (gui '(+JS +Button) "Smaller" '(setq *Guess (smaller)))
-               (gui '(+JS +Button) "Bigger" '(setq *Guess (bigger))) ) ) ) ) )
-      
+(de guess ()
+   (app)
+   (default *Guess (guess-my-number))
+   (action
+      (html 0 "Guess My Number" "@lib.css" NIL
+         (form NIL
+            (<div> 'main
+               (gui '(+Style +Var +TextField) "guess" '*Guess)
+               (<div> 'buttons
+                  (gui '(+JS +Button) "Smaller" '(setq *Guess (smaller)))
+                  (gui '(+JS +Button) "Bigger" '(setq *Guess (bigger))) ) ) ) ) ) )
+
+(de go ()
+   (server 8080 "!guess") )
