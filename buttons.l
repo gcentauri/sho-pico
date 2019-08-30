@@ -16,7 +16,7 @@
 
 (de guess-my-number ()
    (if (> (small) (big))
-      (msg "cheat")
+      "you cheated!"
       (/ (+ (small) (big)) 2) ) )
 
 (de smaller ()
@@ -32,15 +32,15 @@
 
 (de guess ()
    (app)
-   (default *Guess (guess-my-number))
    (action
-      (html 0 "Guess My Number" "@lib.css" NIL
+      (html 0 "Guess My Number" "@sho-pico/buttons.css" NIL
          (form NIL
-            (<div> 'main
-               (gui '(+Style +Var +TextField) "guess" '*Guess)
-               (<div> 'buttons
-                  (gui '(+JS +Button) "Smaller" '(setq *Guess (smaller)))
-                  (gui '(+JS +Button) "Bigger" '(setq *Guess (bigger))) ) ) ) ) ) )
+            (<div> 'container
+               (<div> 'main
+                  (gui '(+Style +View +TextField) "guess" '(pack (guess-my-number)))
+                  (<div> 'buttons
+                     (gui '(+JS +Button) "SMALLER" '(smaller))
+                     (gui '(+JS +Button) "BIGGER" '(bigger)) ) ) ) ) ) ) )
 
 (de go ()
    (server 8080 "!guess") )
