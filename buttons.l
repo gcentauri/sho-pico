@@ -20,12 +20,14 @@
       (/ (+ (small) (big)) 2) ) )
 
 (de smaller ()
-   (set '*Bounds (cons (small) (dec (guess-my-number))))
+   (unless (str? (guess-my-number))
+      (set '*Bounds (cons (small) (dec (guess-my-number)))) )
    (guess-my-number) )
 
 (de bigger ()
-    (set '*Bounds (cons (inc (guess-my-number)) (big)))
-    (guess-my-number) )
+   (unless (str? (guess-my-number))
+      (set '*Bounds (cons (inc (guess-my-number)) (big))) )
+   (guess-my-number) )
 
 # Gui
 #-----
@@ -43,4 +45,4 @@
                      (gui '(+JS +Button) "BIGGER" '(bigger)) ) ) ) ) ) ) )
 
 (de go ()
-   (server 8080 "!guess") )
+   (server 8081 "!guess") )

@@ -1,0 +1,2 @@
+home 4000 shoshin /home/shoshin/picolisp log/home ./pil sho-pico/home.l -go -wait
+guess 8081 shoshin /home/shoshin/picolisp log/guess ./pil sho-pico/buttons.l -go -wait
